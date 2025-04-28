@@ -6,14 +6,8 @@ USER root
 # Устанавливаем FFmpeg
 RUN apk add --no-cache ffmpeg
 
-# Исправляем права доступа для файлов настроек
-RUN mkdir -p /home/node/.n8n && \
-    touch /home/node/.n8n/config && \
-    chmod 600 /home/node/.n8n/config && \
-    chown node:node /home/node/.n8n -R
-
-# Возвращаемся к пользователю node для безопасности
+# Переключаемся обратно на node
 USER node
 
-# Указываем команду запуска
+# Укажем команду запуска
 CMD ["n8n", "start"]
