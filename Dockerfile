@@ -1,13 +1,20 @@
-FROM n8nio/n8n:latest
+# Используем официальный образ Node.js на основе Alpine
+FROM node:20-alpine
 
 # Переключаемся на root для установки пакетов
 USER root
 
-# Устанавливаем FFmpeg и Node.js
-RUN apk add --no-cache ffmpeg nodejs npm
+# Устанавливаем FFmpeg и зависимости
+RUN apk add --no-cache ffmpeg
 
-# Переключаемся обратно на node
+# Устанавливаем n8n глобально
+RUN npm install -g n8n
+
+# Создаём пользователя node
+RUN mkdir -p /home/node/.n8n && chown -R node:node /home/node
+
+# Переключаемся на пользователя node
 USER node
 
 # Укажем команду запуска
-CMD ["node", "/usr/local/lib/node_modules/n8n/bin/n8n", "start"]
+CMD ["n8n", "start"]
