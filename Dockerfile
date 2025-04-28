@@ -10,4 +10,4 @@ RUN apk add --no-cache ffmpeg
 USER node
 
 # Укажем команду запуска
-CMD ["n8n", "start"]
+CMD ["/usr/local/bin/n8n", "start"]
